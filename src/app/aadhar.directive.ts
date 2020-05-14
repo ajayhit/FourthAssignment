@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Renderer2, HostListener } from '@angular/core';
+import { Directive, ElementRef, Renderer2, HostListener, HostBinding } from '@angular/core';
 
 @Directive({
   selector: '[appAadhar]'
@@ -8,19 +8,28 @@ export class AadharDirective {
 
   constructor(private el: ElementRef , randerer: Renderer2) {
   }
-
+  @HostBinding('style.border') border:string;
   @HostListener('input', ['$event'])  onkeydown(event: KeyboardEvent)
    {
       const input = event.target as HTMLInputElement;
-      let out = this.validate(input.value);
-      // tslint:disable-next-line:no-conditional-assignment
-      if (out = true)
+      let trimed=input.value.replace(/\s+/g,'');
+      if(trimed.length>12)
       {
-        alert('Done');
+        trimed=trimed.substr(0,12);
       }
-      else{
-        alert('not valid');
+      let numbers= [];
+      numbers.push(trimed);
+      input.value=numbers.join(' ');
+      this.border='';
+      console.log(trimed)
+      let out = this.validate(trimed);
+      console.log(out);
+      // tslint:disable-next-line:no-conditional-assignment
+      if (out == false)
+      {
+        this.border='1px solid red';
       }
+  
     }
     validate(aadharNumber) {
 

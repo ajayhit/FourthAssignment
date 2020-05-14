@@ -122,5 +122,8 @@
       }
     }
   },
-  "defaultProject": "FourthClass"
+  "defaultProject": "FourthClass",
+  "cli": {
+    "analytics": false
+  }
 }
